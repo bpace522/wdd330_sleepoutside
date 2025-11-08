@@ -1,3 +1,4 @@
+import { renderListWithTemplate } from "./util.mjs"
 function productCardTemplate(product) {
     return `<li class="product-card">
         <a href="product_pages/?product=${product.id}">
@@ -6,20 +7,6 @@ function productCardTemplate(product) {
           <p class="product-card__price">$${product.price}</p>
           </>
         <i/li>`;
-}
-
-function renderList(list) {
-    // parent container in the HTML
-    const productContainer = document.querySelector('.list');
-
-    // ensure the container exist
-    if (!productContainer) {
-        console.error("Container element with class '.list' not found!")
-        return;
-    }
-    const htmlStrings = list.map(productCardTemplate);
-
-    productContainer.insertAdjacentHTML('afterbegin', htmlStrings.join('')) = html;
 }
 
 export default class ProductList {
@@ -33,6 +20,12 @@ export default class ProductList {
     async init() {
         // the dataSource will return a Promise... so you can use await to resolve it.
         const list = await this.dataSource.getData();
-        // next, render the list - ** future **
+        this.renderList(list);
+    }
+
+    renderList(list) {
+        //const htmlStrings = list.map(productCardTemplate);
+        //this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join('')) ;
+        renderListWithTemplate(productCardTemplate.this.listElement, list);
     }
 }
