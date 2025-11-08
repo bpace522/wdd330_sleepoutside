@@ -22,7 +22,7 @@ function renderList(productList) {
     productContainer.innerHTML = html;
 }
 export default class ProductList {
-    constructor(categor, dataSource, listElement) {
+    constructor(category, dataSource, listElement) {
         //You passed in this information to make the class as possible.
         //Being able to define these things when you use the class will make it very flexible
         this.category = category;
