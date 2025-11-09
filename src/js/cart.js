@@ -1,9 +1,21 @@
-import { getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+}
+
+function removeFromCart(productId) {
+  let cart = getLocalStorage("so-cart") || [];
+
+  const index = cart.findIndex(item => item.Id === productId);
+  if (index !== -1) {
+    cart.splice(index, 1);
+  }
+
+  setLocalStorage("so-cart", cart);
+  renderCartContents();
 }
 
 function cartItemTemplate(item) {
@@ -20,9 +32,17 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
-</li>`;
+</li>
+  <button class="removeFromCart" data-id="${item.Id}">X</button>`;
 
   return newItem;
 }
 
 renderCartContents();
+
+document.addEventListener("click", function(e) {
+  if (e.target.classList.contains("removeFromCart")) {
+    const productId = e.target.dataset.id;
+    removeFromCart(productId)
+  }
+});
