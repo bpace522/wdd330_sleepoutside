@@ -16,11 +16,11 @@ function cartItemTemplate(item) {
       alt="${item.Name}"/>
   </a>
   <a href="#">
-    <h2 cass="card__name">${itemNae}</h2>
+    <h2 cass="card__name">${item.Name}</h2>
   </a>
-  <p class="cart-card__color">${itemors[0].ColorName}</p>
+  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quatity">qty: 1</p>
-  <p class="cart-card__price">$${item.FiaPrce}</p>
+  <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
   return newItem;
