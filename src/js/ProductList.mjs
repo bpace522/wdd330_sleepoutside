@@ -1,31 +1,30 @@
-import { renderListWithTemplate } from "./utils.mjs"
+import { renderListWithTemplate } from "./utils.mjs";
+
 function productCardTemplate(product) {
     return `<li class="product-card">
-        <a href="product_pages/?product=${product.id}">
-          <img src="${product.image}" alt+"Image of ${product.name}">
-          <h2 class="card_brand">${product.brand}</h3>
-          <p class="product-card__price">$${product.price}</p>
-          </>
-        <i/li>`;
+      <a href="/product_pages/?product=${product.Id}">
+        <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}">
+        <h3>${product.Brand.Name}></h3>
+        <p>${product.NameWithoutBrand}</p>
+        <p class="product-card_price">$${product.FinalPrice}</p>
+      </a>
+    </li>`
 }
 
 export default class ProductList {
-    constructor(category, dataSource, element) {
-        //You passed in this information to make the class as possible.
-        //Being able to define these things when you use the class will make it very flexible
+    constructor(category, dataSource, listElement) {
         this.category = category;
         this.dataSource = dataSource;
-        this.listElement = element;
+        this.listElement = listElement;
     }
+
     async init() {
-        // the dataSource will return a Promise... so you can use await to resolve it.
-        const list = await this.dataSource.getData();
+        const list = await this.dataSource.getData(this.category);
         this.renderList(list);
+        document.querySelector(".title").textContent = this.category;
     }
 
     renderList(list) {
-        //const htmlStrings = list.map(productCardTemplate);
-        //this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join('')) ;
-        renderListWithTemplate(productCardTemplate.this.element, list);
+        renderListWithTemplate(productCardTemplate, this.listElement, list);
     }
 }
