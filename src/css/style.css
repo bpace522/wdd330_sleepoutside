@@ -278,3 +278,13 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.hide {
+  display: none;
+}
+
+.cart-footer {
+  margin-top: 1em;
+  font-weight: bold;
+}
+

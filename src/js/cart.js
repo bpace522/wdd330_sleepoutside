@@ -6,6 +6,20 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  updateCartTotal(cartItems);
+}
+
+function updateCartTotal(cartItems) {
+  const total = document.querySelector(".cart-footer");
+
+  if (cartItems.length > 0) {
+    total.classList.remove("hide");
+    const newTotal = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    document.querySelector(".cart-total").textContent = `Total: $${newTotal.toFixed(2)}`
+  } else {
+    total.classList.add("hide");
+  }
 }
 
 function removeFromCart(productId) {
