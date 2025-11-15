@@ -1,8 +1,8 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, applyDiscount } from "./utils.mjs";
 
 export default class ProductDetails {
 
-    constructor(productId, dataSource){
+    constructor(productId, dataSource) {
         this.productId = productId;
         this.product = {};
         this.dataSource = dataSource;
@@ -27,7 +27,7 @@ export default class ProductDetails {
     }
 }
 
-function productDetailsTemplate(product){
+function productDetailsTemplate(product) {
     document.querySelector('h2').textContent = product.Brand.Name;
     document.querySelector('h3').textContent = product.NameWithoutBrand;
 
@@ -35,7 +35,18 @@ function productDetailsTemplate(product){
     productImage.src = product.Images.PrimaryLarge;
     productImage.alt = product.NameWithoutBrand;
 
-    document.getElementById('productPrice').textContent = product.FinalPrice;
+    //calculate discounted price
+    const discountedPrice = product.Discount
+        ? applyDiscount(product.Price, product.Discount)
+        : product.Price;
+
+    //display discounted price and original price
+    const priceElement = document.getElemenetById("productPrice");
+    priceElement.innerHTML = productDiscount
+        ? `$${discountedPrice} ,span class="original-price">$${product.Price}</span>`
+        : `$${product.Price}`;
+
+
     document.getElementById('productColor').textContent = product.Colors[0].ColorName;
     document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
