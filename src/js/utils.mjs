@@ -77,3 +77,9 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+// function for discount
+export function applyDiscount(price, discountPercentage) {
+  if (typeof price !== "number" || typeof discountPercentage !== "number") return price;
+  return +(price - (price * (discountPercentage / 100))).tofixed(2);
+}
