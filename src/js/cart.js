@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, loadHeaderFooter, applyDiscount } from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -15,7 +15,13 @@ function updateCartTotal(cartItems) {
 
   if (cartItems.length > 0) {
     total.classList.remove("hide");
-    const newTotal = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+
+    //calculate total using discounted price
+    const newTotal = cartItems.reduce((sum, item) => {
+      const discountedPrice = item.Discount ? applyDiscount(item.Price, item.Discount) : item.Price;
+      return sum + discountedPrice;
+    }, 0);
+
     document.querySelector(".cart-total").textContent = `Total: $${newTotal.toFixed(2)}`
   } else {
     total.classList.add("hide");
@@ -35,7 +41,9 @@ function removeFromCart(productId) {
 }
 
 function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
+  const discountedPrice = item.Discount ? applyDiscount(item.Price, item.Discoount) : item.Price;
+
+  return `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${item.Images.PrimarySmall}"
@@ -47,17 +55,16 @@ function cartItemTemplate(item) {
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
+  <p class="cart-card__price">$${discountedPrice}${item.Discount ? `<span class="original-price>$${item.Price}</span>` : ""}</p>
   <button class="removeFromCart" data-id="${item.Id}">X</button>
 </li>
 `;
 
-  return newItem;
 }
 
 renderCartContents();
 
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
   if (e.target.classList.contains("removeFromCart")) {
     const productId = e.target.dataset.id;
     removeFromCart(productId)
