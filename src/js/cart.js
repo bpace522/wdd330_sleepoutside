@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage, loadHeaderFooter, applyDiscount } from "./utils.mjs";
+import { setLocalStorage, loadHeaderFooter, applyDiscount } from "./utils.mjs";
 
 loadHeaderFooter();
 

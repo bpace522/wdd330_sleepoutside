@@ -1,17 +1,18 @@
 import { loadHeaderFooter } from "./utils.mjs";
-
+import { CheckoutProcess } from "./CheckoutProcess.mjs";
 loadHeaderFooter();
-function renderCheckoutTotal() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    const totalContainer = document.querySelector(".checkout-total")
 
-    if (!totalContainer) return;
+const order = new CheckoutProcess("so-cart", ".checkout-summary");
+order.init();
 
-    const total = cartItems.reduce((sum, item) => {
-        const discountedPrice = item.Discount ? applyDiscount(item.Price, item.Discount) : item.Price;
-        return sum + discountedPrice;
-    }, 0);
+// Add event listeners to fire calculateOrderTotal when the user changes the zip code
+document
+    .querySelector("#zip")
+    .addEventListener("blur", order.calculateOrderTotal.bind(order));
 
-    totalContainer.textContent = `Total: $${total.toFixed(2)}`;
-}
-renderCheckoutTotal();
+// listening for click on the button
+document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    order.checkout();
+});
