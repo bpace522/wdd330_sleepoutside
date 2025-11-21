@@ -1,10 +1,10 @@
 import { getLocalStorage, setLocalStorage, getParam, loadHeaderFooter } from "./utils.mjs";
 import ProductDetails from "./ProductDetails.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 
 loadHeaderFooter();
 
-const dataSource = new ProductData("tents");
+const dataSource = new ExternalServices("tents");
 const productId = getParam('product')
 
 const product = new ProductDetails(productId, dataSource);
