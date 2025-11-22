@@ -20,6 +20,13 @@ export default class ProductDetails {
         const cartItems = getLocalStorage('so-cart') || [];
         cartItems.push(this.product);
         setLocalStorage('so-cart', cartItems);
+
+        //Animate Cart Icon
+        const cartIcon = document.getElementById("cartIcon")
+        cartIcon.classList.remove("cart-animate");
+        void cartIcon.offsetWidth;
+        cartIcon.classList.add("cart-animate");
+
     }
 
     renderProductDetails() {
