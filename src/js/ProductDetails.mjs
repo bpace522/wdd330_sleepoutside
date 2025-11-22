@@ -22,10 +22,13 @@ export default class ProductDetails {
         setLocalStorage('so-cart', cartItems);
 
         //Animate Cart Icon
-        const cartIcon = document.getElementById("cartIcon")
-        cartIcon.classList.remove("cart-animate");
-        void cartIcon.offsetWidth;
-        cartIcon.classList.add("cart-animate");
+        const cartIcon = document.getElementById("backpackIcon")
+        if (cartIcon) {
+            cartIcon.classList.remove("cart-animate");
+            void cartIcon.offsetWidth;
+            cartIcon.classList.add("cart-animate");
+        }
+
 
     }
 
