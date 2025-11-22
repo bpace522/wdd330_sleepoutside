@@ -1,18 +1,20 @@
 import { loadHeaderFooter } from "./utils.mjs";
-import { CheckoutProcess } from "./CheckoutProcess.mjs";
+import CheckoutProcess from "./CheckoutProcess.mjs";
+const baseURL = import.meta.env.VITE_SERVER_URL;
+
+
 loadHeaderFooter();
+console.log("BASE URL:", baseURL);
 
 const order = new CheckoutProcess("so-cart", ".checkout-summary");
 order.init();
 
-// Add event listeners to fire calculateOrderTotal when the user changes the zip code
 document
     .querySelector("#zip")
     .addEventListener("blur", order.calculateOrderTotal.bind(order));
 
-// listening for click on the button
 document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
+    console.log("Checkout payload:", order);
     e.preventDefault();
-
     order.checkout();
 });
