@@ -13,8 +13,11 @@ document
     .querySelector("#zip")
     .addEventListener("blur", order.calculateOrderTotal.bind(order));
 
-document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
-    console.log("Checkout payload:", order);
+document.querySelector('#checkoutSubmit').addEventListener('click', (e) => {
     e.preventDefault();
-    order.checkout();
+    const myForm = document.forms[0];
+    const chk_status = myForm.checkValidity();
+    myForm.reportValidity();
+    if (chk_status)
+        myCheckout.checkout();
 });
