@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -117,8 +117,14 @@ export default class CheckoutProcess {
             const response = await fetch("https://wdd330-backend.onrender.com/checkout", options);
             const result = await response.json();
             console.log("Checkout success:", result);
+            setLocalStorage("so-cart", []);
+            location.assign("/checkout/success.html");
         } catch (err) {
-            console.error("Checkout FAILED:", err);
+            removeAllAlerts();
+            for (let message in err.message) {
+              alertMessage(err.message[message]);
+            }
+            console.log(err);
         }
     }
 }

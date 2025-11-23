@@ -1,4 +1,8 @@
-import { setLocalStorage, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import {
+  setLocalStorage,
+  getLocalStorage,
+  loadHeaderFooter,
+} from "./utils.mjs";
 
 loadHeaderFooter();
 
@@ -16,7 +20,8 @@ function updateCartTotal(cartItems) {
   if (cartItems.length > 0) {
     total.classList.remove("hide");
     const newTotal = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
-    document.querySelector(".cart-total").textContent = `Total: $${newTotal.toFixed(2)}`
+    document.querySelector(".cart-total").textContent =
+      `Total: $${newTotal.toFixed(2)}`;
   } else {
     total.classList.add("hide");
   }
@@ -25,7 +30,7 @@ function updateCartTotal(cartItems) {
 function removeFromCart(productId) {
   let cart = getLocalStorage("so-cart") || [];
 
-  const index = cart.findIndex(item => item.Id === productId);
+  const index = cart.findIndex((item) => item.Id === productId);
   if (index !== -1) {
     cart.splice(index, 1);
   }
@@ -57,9 +62,9 @@ function cartItemTemplate(item) {
 
 renderCartContents();
 
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
   if (e.target.classList.contains("removeFromCart")) {
     const productId = e.target.dataset.id;
-    removeFromCart(productId)
+    removeFromCart(productId);
   }
 });
